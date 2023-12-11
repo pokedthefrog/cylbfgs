@@ -7,8 +7,8 @@ import numpy as np
 
 def test_fmin_lbfgs():
     def f(x, g, *args):
-        g[0] = 2 * x
-        return x ** 2
+        g[:] = 2 * x
+        return x[0] ** 2
 
     xmin = fmin_lbfgs(f, 100., line_search='armijo')
     assert_array_equal(xmin, [0])
@@ -20,8 +20,8 @@ class TestOWLQN:
 
     def test_owl_qn(self):
         def f(x, g, *args):
-            g[0] = 2 * x
-            return x ** 2
+            g[:] = 2 * x
+            return x[0] ** 2
 
         xmin = fmin_lbfgs(f, 100., orthantwise_c=1, line_search='wolfe')
         assert_array_equal(xmin, [0])
@@ -92,7 +92,7 @@ def test_2d():
 def test_class_interface():
     def f(x, g, *args):
         g[:] =  4 * x
-        return x ** 4 + 1
+        return x[0] ** 4 + 1
 
     opt = LBFGS()
     opt.max_iterations = 3
