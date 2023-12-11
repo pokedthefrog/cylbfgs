@@ -61,11 +61,11 @@ cdef extern from "lbfgs.h":
     ctypedef lbfgsfloatval_t* lbfgsconst_p "const lbfgsfloatval_t *"
 
     ctypedef lbfgsfloatval_t (*lbfgs_evaluate_t)(void *, lbfgsconst_p,
-                              lbfgsfloatval_t *, int, lbfgsfloatval_t)
+                              lbfgsfloatval_t *, int, lbfgsfloatval_t) except 1/0
     ctypedef int (*lbfgs_progress_t)(void *, lbfgsconst_p, lbfgsconst_p,
                                      lbfgsfloatval_t, lbfgsfloatval_t,
                                      lbfgsfloatval_t, lbfgsfloatval_t,
-                                     int, int, int)
+                                     int, int, int) except -1
  
     ctypedef struct lbfgs_parameter_t:
         int m
@@ -107,7 +107,7 @@ cdef class CallbackData(object):
 # Callback into Python evaluation callable.
 cdef lbfgsfloatval_t call_eval(void *cb_data_v,
                                lbfgsconst_p x, lbfgsfloatval_t *g,
-                               int n, lbfgsfloatval_t step):
+                               int n, lbfgsfloatval_t step) except 1/0:
     cdef object cb_data
     cdef np.npy_intp tshape[1]
 
@@ -125,7 +125,7 @@ cdef int call_progress(void *cb_data_v,
                        lbfgsconst_p x, lbfgsconst_p g,
                        lbfgsfloatval_t fx,
                        lbfgsfloatval_t xnorm, lbfgsfloatval_t gnorm,
-                       lbfgsfloatval_t step, int n, int k, int ls):
+                       lbfgsfloatval_t step, int n, int k, int ls) except -1:
     cdef object cb_data
     cdef np.npy_intp tshape[1]
 
@@ -410,7 +410,10 @@ cdef class LBFGS(object):
             elif r == LBFGSERR_OUTOFMEMORY:
                 raise MemoryError
             else:
-                raise LBFGSError(_ERROR_MESSAGES[r])
+                if r in _ERROR_MESSAGES:
+                    raise LBFGSError(_ERROR_MESSAGES[r])
+                else:
+                    raise LBFGSError(r)
 
         finally:
             lbfgs_free(x_a)

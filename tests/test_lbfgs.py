@@ -115,3 +115,20 @@ def test_input_validation():
         fmin_lbfgs(lambda x: x, 1e4, "ham")
     with pytest.raises(TypeError):
         fmin_lbfgs(lambda x: x, "spam")
+
+
+def test_exceptions():
+    def f(x, g):
+        assert x < 10.0
+        g[:] = x * 2
+        return x[0] ** 2
+
+    def p(*_):
+        raise Exception("test")
+
+    with pytest.raises(Exception):
+        xmin = fmin_lbfgs(f, 100.0)
+    with pytest.raises(Exception):
+        xmin = fmin_lbfgs(f, 1.0, progress=p)
+    xmin = fmin_lbfgs(f, 9.0)
+    assert_array_equal(xmin, [0])
