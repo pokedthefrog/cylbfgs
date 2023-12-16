@@ -61,7 +61,7 @@ cdef extern from "lbfgs.h":
     ctypedef lbfgsfloatval_t* lbfgsconst_p "const lbfgsfloatval_t *"
 
     ctypedef lbfgsfloatval_t (*lbfgs_evaluate_t)(void *, lbfgsconst_p,
-                              lbfgsfloatval_t *, int, lbfgsfloatval_t) except 1/0
+                              lbfgsfloatval_t *, int, lbfgsfloatval_t) except -1
     ctypedef int (*lbfgs_progress_t)(void *, lbfgsconst_p, lbfgsconst_p,
                                      lbfgsfloatval_t, lbfgsfloatval_t,
                                      lbfgsfloatval_t, lbfgsfloatval_t,
@@ -107,7 +107,7 @@ cdef class CallbackData(object):
 # Callback into Python evaluation callable.
 cdef lbfgsfloatval_t call_eval(void *cb_data_v,
                                lbfgsconst_p x, lbfgsfloatval_t *g,
-                               int n, lbfgsfloatval_t step) except 1/0:
+                               int n, lbfgsfloatval_t step) except -1:
     cdef object cb_data
     cdef np.npy_intp tshape[1]
 
