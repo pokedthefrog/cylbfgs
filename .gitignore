@@ -6,3 +6,6 @@
 *.so
 
 build/
+
+# JetBrains
+.idea/
