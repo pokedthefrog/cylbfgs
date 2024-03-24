@@ -1,5 +1,51 @@
+[tool.poetry]
+name = "cylbfgs"
+version = "0.3.0"
+description = "L-BFGS and OWL-QN optimisation methods"
+license = "MIT"
+authors = [
+    "Lars Buitinck <L.J.Buitinck@uva.nl>",
+    "Forest Gregg <fgregg@gmail.com>",
+    "Nicholas M Katritsis <nmkatri@proton.me>",
+]
+maintainers = [
+    "Nicholas M Katritsis <nmkatri@proton.me>",
+]
+readme = "README.rst"
+repository = "https://github.com/pokedthefrog/cylbfgs"
+classifiers = [
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX",
+    "Programming Language :: Cython",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Software Development",
+]
+include = [
+    {path = "compat/win32/stdint.h", format = "wheel"},
+    {path = "liblbfgs/", format = "wheel"},
+    {path = "README.rst", format = "wheel"},
+    {path = "LICENSE", format = "wheel"},
+    {path = "pyproject.toml", format = "wheel"},
+]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+numpy = [
+    {version = "^1.21.0", python = "~3.7"},
+    {version = "^1.24.0", python = "~3.8"},
+    {version = "^1.26.0", python = ">=3.9, <3.13"},
+]
+
+[tool.poetry.group.dev.dependencies]
+cython = "^3.0.9"
+
+[tool.poetry.build]
+script = "build.py"
+generate-setup-file = true
+
 [build-system]
-requires = ["setuptools",
-            "wheel",
-            "cython",
-            "oldest_supported_numpy"]
+requires = ["poetry-core", "setuptools", "wheel", "cython", "oldest_supported_numpy"]
+build-backend = "poetry.core.masonry.api"
