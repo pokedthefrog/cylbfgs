@@ -26,7 +26,8 @@ def build(setup_kwargs):
                 include_dirs.append('compat/win32/')
 
     include_dirs = [
-        'liblbfgs/',
+        'liblbfgs/include/',
+        'liblbfgs/lib/',
         numpy.get_include(),
     ]
 
@@ -35,7 +36,7 @@ def build(setup_kwargs):
             Extension('cylbfgs._lowlevel',
                       sources=[
                           'cylbfgs/_lowlevel.pyx',
-                          'liblbfgs/lbfgs.c',
+                          'liblbfgs/lib/lbfgs.c',
                       ],
                       include_dirs=include_dirs),
         ])
@@ -44,7 +45,7 @@ def build(setup_kwargs):
             Extension('cylbfgs._lowlevel',
                       sources=[
                           'cylbfgs/_lowlevel.c',
-                          'liblbfgs/lbfgs.c',
+                          'liblbfgs/lib/lbfgs.c',
                       ],
                       include_dirs=include_dirs),
         ]
