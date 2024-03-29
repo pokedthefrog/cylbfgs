@@ -1,56 +1,36 @@
-PyLBFGS
+=======
+cyLBFGS
 =======
 
-.. image:: https://travis-ci.org/dedupeio/pylbfgs.svg?branch=master
-    :target: https://travis-ci.org/dedupeio/pylbfgs
+**cyLBFGS** is a Cython wrapper around `a slightly modified version`_ of
+Naoaki Okazaki (chokkan)'s liblbfgs_ optimisation library. It implements both
+the Limited-memory Broyden-Fletcher-Goldfarb-Shanno (L-BFGS) and Orthant-Wise
+Limited-memory Quasi-Newton (OWL-QN) methods.
 
+This package aims to provide Python users with a cleaner, more comprehensive
+interface to the L-BFGS algorithm than is currently available in SciPy_,
+including access to the OWL-QN algorithm for solving L1-regularised problems.
 
-This is a Python wrapper around Naoaki Okazaki (chokkan)'s liblbfgs_ library
-of quasi-Newton optimization routines (limited memory BFGS and OWL-QN).
+Installation
+============
 
-This package aims to provide a cleaner interface to the LBFGS
-algorithm than is currently available in SciPy_, and to provide the
-OWL-QN algorithm to Python users.
+Directly from GitHub:
 
-Part of the Dedupe.io_ cloud service and open source toolset for de-duplicating and finding fuzzy matches in your data.
+- **with poetry**::
 
+    poetry add git+https://github.com/pokedthefrog/cylbfgs.git
 
-Installing
-==========
-Type::
+- **or with pip**::
 
-    pip install pylbfgs
-
-
-Hacking
-=======
-Type::
-
-    pip install "pip>=10"
-    pip install -r requirements.txt
-    pip install -e .
-
-To run the test suite::
-
-    pytest tests
-
+    pip install git+https://github.com/pokedthefrog/cylbfgs.git
 
 Authors
 =======
-PyLBFGS was written by Lars Buitinck.
+This package is based on the `dedupe.io fork of PyLBFGS`_ by Forest Gregg. The
+original code was written by Lars Buitinck.
 
-Alexis Mignon submitted a patch for error handling.
 
-.. _Dedupe.io: https://dedupe.io/
-
-.. _Cython: http://cython.org/
-
-.. _liblbfgs: http://chokkan.org/software/liblbfgs/
-
-.. _pytest: http://doc.pytest.org/en/latest/
-
-.. _NumPy: http://numpy.scipy.org/
-
-.. _SciPy: http://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.fmin_l_bfgs_b.html
-
-.. _setuptools: http://pypi.python.org/pypi/setuptools
+.. _a slightly modified version: https://github.com/pokedthefrog/liblbfgs
+.. _liblbfgs: https://www.chokkan.org/software/liblbfgs/
+.. _SciPy: https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.fmin_l_bfgs_b.html
+.. _dedupe.io fork of PyLBFGS: https://github.com/dedupeio/pylbfgs
